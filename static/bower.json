@@ -1,0 +1,29 @@
+{
+  "name": "mcaas",
+  "version": "1.0.0",
+  "authors": [
+    "Christophe Roux <gloppasglop@gmail.com>"
+  ],
+  "description": "Minecraft as a Service",
+  "license": "Apache",
+  "homepage": "https://github.com/gloppasglop/mcaas",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.5.0",
+    "angular-resource": "~1.5.0",
+    "angular-translate-storage-local": "~2.9.1",
+    "angular-translate": "~2.9.1",
+    "angular": "~1.5.0",
+    "animate.css": "~3.5.1",
+    "bootstrap": "~3.3.6",
+    "jquery.gritter": "~1.7.4",
+    "jquery": "~2.2.0"
+  }
+}
