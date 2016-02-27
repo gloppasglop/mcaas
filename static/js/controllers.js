@@ -22,10 +22,27 @@ function alert_error(message) {
 
 var mcaasControllers = angular.module('mcaasControllers', []);
 
-mcaas.controller('ContainersController', ['$scope', 'Container', 
+mcaasControllers.controller('ContainersController', ['$scope', 'Container', 
   function($scope, Container) {
 
   /* Get all containers objects */
   $scope.containers = Container.query();
 
 }]);
+
+mcaasControllers.controller('ContainerController', ['$scope', '$routeParams', 'Container', 
+  function($scope, $routeParams, Container) {
+
+   $scope.container = Container.get( { id:$routeParams.id});
+//  console.log($scope.container)
+
+
+}]);
+
+
+mcaasControllers.controller('TranslateController', function($translate, $scope) {
+  $scope.changeLanguage = function (langKey) {
+    console.log(langKey);
+    $translate.use(langKey);
+  };
+});

@@ -2,12 +2,9 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-    "fmt"
     "github.com/docker/engine-api/client"
     "github.com/docker/engine-api/types"
     "github.com/docker/engine-api/types/filters"
-    "encoding/json"
-
 )
 
 /* It's a beego controller */
@@ -23,7 +20,7 @@ func (this *DockerengineapiController) GetContainers() {
         }
 
     filters := filters.NewArgs()
-    filters.Add("label", "com.gloppasglop.toto=mcaas")
+    filters.Add("label", "com.gloppasglop.minecraft=mcaas")
     options := types.ContainerListOptions{
         All: true,
         Filter: filters,
@@ -33,9 +30,23 @@ func (this *DockerengineapiController) GetContainers() {
         panic(err)
     }
 
-    res, err := json.Marshal(containers)
-    fmt.Println(string(res))
-    this.Data["json"] = string(res)
+    this.Data["json"] = containers
     this.ServeJSON()
 }
 
+/* Call docker-engine api */
+func (this *DockerengineapiController) GetContainer() {
+        cli, err := client.NewEnvClient()
+        if err != nil {
+            panic(err)
+        }
+    id := this.GetString(":id")
+
+    container, err := cli.ContainerInspect(id)
+    if err != nil {
+        panic(err)
+    }
+
+    this.Data["json"] = container
+    this.ServeJSON()
+}

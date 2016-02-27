@@ -4,6 +4,7 @@
 /* The seagull angular application */
 var mcaas = angular.module('mcaas', [
   'ngRoute',
+  'ngSanitize',
   'mcaasControllers',
   'mcaasServices',
   'ngCookies', // To save perference of i18n language
@@ -25,9 +26,23 @@ mcaas.config(['$locationProvider', '$routeProvider',
       when('/containers', {
         templateUrl: '/static/html/containers.html',
         controller: 'ContainersController'
-      });
+      }).
+      when('/containers/:id', {
+         templateUrl: '/static/html/container.html',
+          controller: 'ContainerController'
+     });
   }]
 );
+
+mcaas.filter('normalizeContainerName',function() {
+    return function(input) {
+        if ( angular.isString(input) ) {
+            return input.replace(/\//g,'')
+        } else {
+            return input
+        }
+    }
+});
 
 /* Use angular-translate for i18n and all text should be translated here */
 mcaas.config(function ($translateProvider) {
@@ -36,6 +51,7 @@ mcaas.config(function ($translateProvider) {
 
   /* The default language should be English */
   $translateProvider.preferredLanguage('en-us');
+  $translateProvider.useSanitizeValueStrategy('escaped');
 
   /* Translate into English */
   $translateProvider.translations('en-us', {
@@ -47,10 +63,9 @@ mcaas.config(function ($translateProvider) {
     more: 'More',
     en_us: 'English',
     fr_fr: 'Français',
-    need_help: 'Need Help',
-    goversion: 'GoVersion',
-    version: 'Version',
-    gitcommit: 'GitCommit',
+    worlds: 'Worlds',
+    mods: 'Mods',
+    language: 'Language'
   });
 
   /* Translate into French */
@@ -64,10 +79,9 @@ mcaas.config(function ($translateProvider) {
     more: 'Plus',
     en_us: 'English',
     fr_fr: 'Français',
-    need_help: 'Besoin d\'aide',
-    goversion: 'GoVersion',
-    version: 'Version',
-    gitcommit: 'GitCommit',
+    worlds: "Mondes",
+    mods: 'Mods',
+    language: 'Langue'
   });
 
 });

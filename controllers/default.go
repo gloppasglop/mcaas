@@ -10,4 +10,5 @@ type MainController struct {
 
 func (this *MainController) Get() {
 	this.TplName = "index.html"
+        this.Render()
 }

@@ -35,33 +35,10 @@
 
     </head>
 
-    <body  ng-controller="TranslateController">
-    <nav class="navbar navbar-inverse">
-  <div class="container-fluid" >
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Self Service Minecraft</a>
-    </div>
-    <ul class="nav navbar-nav" >
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="/containers">{{'containers'|translate}}</a></li>
-      <li><a href="#">{{'worlds'|translate}}</a></li> 
-      <li><a href="#">{{'mods'|translate}}</a></li> 
-                 <li class="dropdown">
-              <a class="dropdown-toggle animate-nav" data-toggle="dropdown" href="">{{'language'|translate}} <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li class="animate-nav" ><a ng-href="" ng-click="changeLanguage('en-us')">{{'en_us'|translate}}</a></li>
-                <li class="animate-nav" ><a ng-href="" ng-click="changeLanguage('fr-fr')">{{'fr_fr'|translate}}</a></li>
-              </ul>
-            </li>
-
-    </ul>
-
-  </div>
-</nav>
+    <body>
         <div class="container">
             <h1>My First Bootstrap Page</h1>
             <p>This is some text.</p> 
-            <div ng-view></div>
         </div>
 
     </body>
