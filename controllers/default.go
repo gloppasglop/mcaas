@@ -10,5 +10,9 @@ type MainController struct {
 
 func (this *MainController) Get() {
 	this.TplName = "index.html"
-        this.Render()
+	this.Render()
+}
+
+func (this *MainController) UploadFiles() {
+	this.SaveToFile("the_file","/Users/christopheroux/Downloads/upload_file.txt")
 }

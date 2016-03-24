@@ -1,25 +1,5 @@
 'use strict';
 
-/* Use JQuery.gritter to popup success message */
-function alert_success(message) {
-  $.gritter.add({
-    title: 'Success!',
-    text: message,
-    image: 'static/img/seagull-logo.png',
-    time: 3000
-  });
-}
-
-/* Use JQuery.gritter to popup error message */
-function alert_error(message) {
-  $.gritter.add({
-    title: 'Error!',
-    text: message,
-    image: 'static/img/seagull-logo.png',
-    time: 3000
-  });
-}
-
 var mcaasControllers = angular.module('mcaasControllers', []);
 
 mcaasControllers.controller('ContainersController', ['$scope', 'Container', 
@@ -38,6 +18,47 @@ mcaasControllers.controller('ContainerController', ['$scope', '$routeParams', 'C
 
 
 }]);
+
+mcaasControllers.controller('UploadController', ['$scope', '$timeout', 'Upload', 
+  function ($scope, $timeout, Upload) {
+
+    $scope.uploadFiles = function(file, errFiles) {
+        $scope.f = file;
+        $scope.errFile = errFiles && errFiles[0];
+        if (file) {
+            file.upload = Upload.upload({
+                url: '/upload',
+                data: {the_file: file}
+            });
+
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                         evt.loaded / evt.total));
+            });
+        }   
+    }
+
+}]);
+
+
+mcaasControllers.controller('formController', function($scope) {
+    
+    // we will store all of our form data in this object
+    $scope.formData = {};
+    
+    // function to process the form
+    $scope.processForm = function() {
+        alert('awesome!');
+    };
+    
+});
 
 
 mcaasControllers.controller('TranslateController', function($translate, $scope) {

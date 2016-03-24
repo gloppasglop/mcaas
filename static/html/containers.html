@@ -1,16 +1,25 @@
-<div ng-show="!containers.length" class="alert alert-danger" role="alert">{{'no_docker_container'|translate}}</div>
-<div ng-repeat="container in  containers" class="panel panel-default">
-    <div class="panel-heading">{{container.Names[0] | normalizeContainerName}}</div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-4">
-                <p>{{container.Status}}</p>
-            </div>
-            <div class="col-sm-8">
-                     <p>Sed ut perspiciatis...</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"><i class="fa fa-cubes fa-lg"></i>Containers</h1>
+            <div ng-show="!containers.length" class="alert alert-danger" role="alert">{{'no_docker_container'|translate}}</div>
+            <div ng-repeat="container in  containers" class="panel panel-default">
+                <div class="panel-heading">{{container.Names[0] | normalizeContainerName}}</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>{{container.Status}}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>Sed ut perspiciatis...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">{{container.Name}}</div>
             </div>
         </div>
+        <!-- /.col-lg-12 -->
     </div>
-    <div class="panel-body">{{container.Name}}</div>
+    <!-- /.row -->
 </div>
 

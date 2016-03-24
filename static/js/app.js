@@ -3,36 +3,78 @@
 
 /* The seagull angular application */
 var mcaas = angular.module('mcaas', [
-  'ngRoute',
   'ngSanitize',
   'mcaasControllers',
   'mcaasServices',
+  'ngAnimate',
   'ngCookies', // To save perference of i18n language
+  'ui.router',
+  'ngResource',
+  'ngFileUpload',
   'pascalprecht.translate'
 ]);
 
 /* Configurate application like router and others*/
-mcaas.config(['$locationProvider', '$routeProvider',
-  function($locationProvider, $routeProvider) {
-    /* Remove the # in url from Angular */
-    $locationProvider.html5Mode(true);
+mcaas.config(function($stateProvider, $urlRouterProvider) {
 
-    /* Set router, all in /js/controllers.js */
-    $routeProvider.
-/*      when('/', {
-        templateUrl: '/static/html/home.html',
-        controller: 'HomeController'
-      }). */
-      when('/containers', {
-        templateUrl: '/static/html/containers.html',
-        controller: 'ContainersController'
-      }).
-      when('/containers/:id', {
-         templateUrl: '/static/html/container.html',
-          controller: 'ContainerController'
-     });
-  }]
-);
+    $urlRouterProvider.otherwise('/dashboard');
+
+    $stateProvider
+        .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: '/static/html/main.html'
+        })
+
+        .state('dashboard.home', {
+            url: '/dashboard',
+            templateUrl: '/static/html/home.html'
+        })
+
+        .state('dashboard.containers', {
+            url: '/containers',
+            templateUrl: '/static/html/containers.html',
+            controller: 'ContainersController'
+        })
+
+        .state('dashboard.blank',{
+            templateUrl:'static/html/blank.html',
+            url:'/blank'
+        })
+
+        .state('dashboard.worlds',{
+            templateUrl:'static/html/upload.html',
+            url:'/upload',
+            controller: 'UploadController'
+        })
+
+        // route to show our basic form (/form)
+        .state('dashboard.form', {
+            url: '/form',
+            templateUrl: 'static/html/partial-form-container.html',
+            controller: 'formController'
+        })
+
+        // nested states 
+        // each of these sections will have their own view
+        // url will be nested (/form/profile)
+        .state('dashboard.form.profile', {
+            url: '/profile',
+            templateUrl: 'static/html/form-profile.html'
+        })
+        
+        // url will be /form/interests
+        .state('dashboard.form.interests', {
+            url: '/interests',
+            templateUrl: 'static/html/form-interests.html'
+        })
+        
+        // url will be /form/payment
+        .state('dashboard.form.payment', {
+            url: '/payment',
+            templateUrl: 'static/html/form-payment.html'
+        });
+        
+});
 
 mcaas.filter('normalizeContainerName',function() {
     return function(input) {
