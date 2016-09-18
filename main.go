@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/astaxie/beego"
-	_ "mcaas/routers"
+	_ "github.com/gloppasglop/mcaas/routers"
 )
 
 func main() {
