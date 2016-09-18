@@ -22,7 +22,7 @@ mcaas.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('dashboard', {
             url: '/dashboard',
-            templateUrl: '/static/html/main.html'
+            templateUrl: '/static/html/index.html'
         })
 
         .state('dashboard.home', {
