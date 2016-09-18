@@ -3,6 +3,7 @@ bower_components/
 tmp
 .DS_Store
 .idea
+node_modules
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
