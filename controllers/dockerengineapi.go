@@ -2,9 +2,10 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/docker/engine-api/client"
-	"github.com/docker/engine-api/types"
-	"github.com/docker/engine-api/types/filters"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/client"
+	"golang.org/x/net/context"
 )
 
 /* It's a beego controller */
@@ -25,7 +26,7 @@ func (this *DockerengineapiController) GetContainers() {
 		All:    true,
 		Filter: filters,
 	}
-	containers, err := cli.ContainerList(options)
+	containers, err := cli.ContainerList(context.Background(), options)
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +43,7 @@ func (this *DockerengineapiController) GetContainer() {
 	}
 	id := this.GetString(":id")
 
-	container, err := cli.ContainerInspect(id)
+	container, err := cli.ContainerInspect(context.Background(), id)
 	if err != nil {
 		panic(err)
 	}
