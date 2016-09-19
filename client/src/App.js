@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FontAwesome from 'react-fontawesome';
-import { Panel } from 'react-bootstrap';
+import {  Panel, PageHeader } from 'react-bootstrap';
 
 
 class App extends Component {
@@ -11,9 +11,8 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to MiCaas</h2>
+          <PageHeader>Welcome to MineCaas</PageHeader>
         </div> 
-        <Panel>Test Panel</Panel>
         <ContainerSection />
       </div>
     );
@@ -24,23 +23,28 @@ class App extends Component {
 class Container extends React.Component {
 
   render() {
+    var container = this.props.container;
+    var canonicalName = container.Names[0].replace(/\//g,'');
+    var bsStyle = (container.State !== "running" ) ? 'danger' : 'primary';
     return (
-      <li>{this.props.name}</li>
+      <Panel header={canonicalName} bsStyle={bsStyle} >
+        <p>{canonicalName} with id: {container.Id}</p>
+        <p>Status: {container.State}</p>
+      </Panel>
     )
   }
 }
 
 class ContainerList extends React.Component {
   render() {
-      console.log(this.props);
     return (
-      <ul>
+      <div>
         {
           this.props.containers.map( container => {
-            return(<Container name={container.Names[0]} key={container.Id}/>)
+            return(<Container container={container} key={container.Id} />)
             })
         }
-      </ul>
+      </div>
       
     )
   }
@@ -57,13 +61,15 @@ class ContainerSection extends React.Component {
 
   componentDidMount() {
 
-    fetch('/dockerapi/containers/')
+    this.interval = setInterval( () => { 
+      fetch('/dockerapi/containers/')
       .then((response) =>  { return response.json() })
       .then((responseJson) => { this.setState({containers: responseJson}) })
       .catch((error) => {
         console.error(error);
-        });
-    console.log(this.state);
+        }); 
+    }, 1000 );
+
     //this.setState({containers: [ {name: 'essai'}, {name: 'test'}]});
   }
 
@@ -73,7 +79,7 @@ class ContainerSection extends React.Component {
       <div className="container-fluid">
           <div className="row">
               <div className="col-lg-12">
-                  <h1 className="page-header"><FontAwesome name='cubes'>Containers</FontAwesome></h1>
+                  <PageHeader><FontAwesome name='cubes'>Containers</FontAwesome></PageHeader>
               <div>
               <ContainerList containers={this.state.containers}/>
             </div>          

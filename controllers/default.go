@@ -9,7 +9,7 @@ type MainController struct {
 }
 
 func (this *MainController) Get() {
-	this.TplName = "essai.html"
+	this.TplName = "index.html"
 	this.Render()
 }
 
